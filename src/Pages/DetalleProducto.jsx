@@ -29,6 +29,8 @@ export function DetalleProducto(){
 
     return (
         <div className="detalle-producto">
+            {item.attributes.length > 0 && 
+            <p className="filter">{ item.attributes.slice(0, 5).map(filtro => filtro.name).join(" > ") }</p>}
             <div className="producto-container">
                 <div className="producto-flex">
                     <img className="prod-img"
