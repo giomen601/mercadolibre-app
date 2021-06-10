@@ -10,15 +10,23 @@ export function Home(){
     const query = useQuery();
     const search = query.get("search");
     const [isLoading, setLoading] = useState(true);
+    const composedata = {
+        "author": {
+            "name": "Giovany",
+            "lastname": "Ariza"
+        },
+        "data": {}
+    }
 
     useEffect(() => {
         setLoading(true);
 
         GetbyText(search)
         .then((data) => {
+            composedata.data = data;
             
-            setProducto(data)
-            console.log(data);
+            setProducto(composedata)
+            console.log(composedata);
             setLoading(false);
         })
     }, [search]);
@@ -29,10 +37,11 @@ export function Home(){
 
     return( 
         <div className="home-container">
-            <SearchBar />
-            <p className="filter">{ producto.available_filters[0].values.slice(0, 5).map(filtro => filtro.name).join(" > ") }</p>
+            
+            {producto.data.results.length > 0 &&
+             <p className="filter">{ producto.data.available_filters[0].values.slice(0, 5).map(filtro => filtro.name).join(" > ") }</p> }
             <div className="objs-container">
-                { producto.results.map((data) => (
+                { producto.data.results.map((data) => (
                     <ProductoCard key={data.id} data={data} />
                 ))}
             </div>
